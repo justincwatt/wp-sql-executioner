@@ -45,18 +45,20 @@ add_action('admin_menu', 'add_sql_executioner');
 
 function sql_executioner() 
 {
+  if (!empty($_POST)) {
+    check_admin_referer('sql-executioner-submit');
+  }
+
   global $wpdb;
-  $prefix_pattern = "/^$wpdb->prefix/";
 
   // set up our own db connection
   $db = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD, true);
   mysql_select_db(DB_NAME, $db);
 
   // get list of tables and dollar-sign shortcuts
-  $sql = "show tables";
-  $rst = mysql_query($sql, $db);
+  $rst = mysql_query("show tables", $db);
   while ($row = mysql_fetch_array($rst)) {
-    $tables[$row[0]] = '$' . preg_replace($prefix_pattern, '', $row[0]);
+    $tables[$row[0]] = '$' . preg_replace("/^$wpdb->prefix/", '', $row[0]);
   }
 
   // because wordpress forcefully adds magic quotes in wp-settings.php
@@ -105,8 +107,7 @@ function sql_executioner()
     </form>
   <?php
 
-
-  if (!empty($_POST) && check_admin_referer('sql-executioner-submit')) {
+  if (!empty($_POST)) {
 
     // interpolate real table names
     foreach ($tables as $table_name => $table_stub) {
@@ -116,10 +117,10 @@ function sql_executioner()
     print "<br /><strong>Results</strong><br />";
     print "Query: " . htmlentities($sql);
     print "<br />";
-    
-    if (preg_match("/^\s*(alter|create|drop|rename|insert|delete|update|replace|truncate) /i", $sql)) {
-      
-      if (mysql_query($sql, $db)) {
+
+    if ($rst = mysql_query($sql, $db)) {
+
+      if (preg_match("/^\s*(alter|create|drop|rename|insert|delete|update|replace|truncate) /i", $sql)) {
       
         print mysql_affected_rows($db);
         if (mysql_affected_rows($db) == 1) {
@@ -129,13 +130,7 @@ function sql_executioner()
         }
 
       } else {
-        print "Error: " . htmlentities(mysql_error($db));
-      }
-
-    } elseif (preg_match("/^\s*(select|desc|describe|show|explain) /i", $sql)) {
-      
-      if ($rst = mysql_query($sql, $db)) {
-      
+     
         print "<div style='width:100%;overflow:auto;padding:2px;'>";
         print "<table border='1' style='border-collapse:collapse;background:#F4F4F4;'>";
         $print_headers = true;
@@ -161,16 +156,11 @@ function sql_executioner()
         print "</tbody>";
         print "</table>";
         print "</div>";
-      
-      } else {
-        print "Error: " . htmlentities(mysql_error($db));
       }
-
+      
     } else {
-      print "Error: Not a valid SQL statement";
+      print "Error: " . htmlentities(mysql_error($db));
     }
   }
-
   print "</div>";
-  
 }
