@@ -80,6 +80,7 @@ function sql_executioner()
 
     </script>
     <form method="post" name="sql_executioner">
+      <?php wp_nonce_field('sql-executioner-submit'); ?>
       <strong>Tables</strong><br />
       <?php 
       $first = true;
@@ -102,7 +103,7 @@ function sql_executioner()
   <?php
 
 
-  if ($sql != '') {
+  if (!empty($_POST) && check_admin_referer('sql-executioner-submit')) {
 
     // interpolate real table names
     foreach ($tables as $table_name => $table_stub) {
