@@ -114,7 +114,7 @@ function sql_executioner()
     print "Query: " . htmlentities($sql);
     print "<br />";
     
-    if (preg_match("/^\\s*(alter|create|drop|rename|insert|delete|update|replace|truncate) /i", $_POST['sql'])) {
+    if (preg_match("/^\s*(alter|create|drop|rename|insert|delete|update|replace|truncate) /i", $sql)) {
       
       if (mysql_query($sql, $db)) {
       
@@ -129,7 +129,7 @@ function sql_executioner()
         print "Error: " . htmlentities(mysql_error($db));
       }
 
-    } elseif (preg_match("/^\\s*(select|desc|describe|show|explain) /i", $_POST['sql'])) {
+    } elseif (preg_match("/^\s*(select|desc|describe|show|explain) /i", $sql)) {
       
       if ($rst = mysql_query($sql, $db)) {
       
@@ -171,5 +171,3 @@ function sql_executioner()
   print "</div>";
   
 }
-
-?>
