@@ -3,7 +3,7 @@
 Plugin Name: WordPress SQL Executioner
 Version: 1.0
 Plugin URI: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
-Description: Execute SQL commands on your WordPress database. Goto <a href="edit.php?page=wp-sql-executioner.php">Manage &gt; SQL Executioner</a> to operate.
+Description: Execute SQL commands on your WordPress database. Goto <a href="tools.php?page=sql-executioner.php">Tools &gt; SQL Executioner</a> to operate.
 Author: Justin Watt
 Author URI: http://justinsomnia.org/
 
@@ -13,7 +13,7 @@ initial version
 LICENSE
 
 wp-sql-executioner.php
-Copyright (C) 2008 Justin Watt
+Copyright (C) 2012 Justin Watt
 justincwatt@gmail.com
 http://justinsomnia.org/
 
@@ -33,15 +33,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 
-function add_wp_sql_executioner() {
+function add_sql_executioner() {
   // Add a new menu under Manage:
-  add_management_page('SQL Executioner', 'SQL Executioner', 10, __FILE__, 'wp_sql_executioner');
+  add_management_page('SQL Executioner', 'SQL Executioner', 'manage_options', __FILE__, 'sql_executioner');
 }
+add_action('admin_menu', 'add_sql_executioner');
 
-add_action('admin_menu', 'add_wp_sql_executioner');
 
-
-function wp_sql_executioner() 
+function sql_executioner() 
 {
   global $wpdb;
   $prefix_pattern = "/^$wpdb->prefix/";
