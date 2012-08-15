@@ -1,11 +1,14 @@
 <?php
 /*
 Plugin Name: WordPress SQL Executioner
-Version: 1.0
+Version: 1.1
 Plugin URI: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
 Description: Execute SQL commands on your WordPress database. Goto <a href="tools.php?page=sql-executioner.php">Tools &gt; SQL Executioner</a> to operate.
 Author: Justin Watt
 Author URI: http://justinsomnia.org/
+
+1.1
+Add wp_nonce_field check, minor code cleanup
 
 1.0
 initial version
@@ -49,6 +52,7 @@ function sql_executioner()
   $db = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD, true);
   mysql_select_db(DB_NAME, $db);
 
+  // get list of tables and dollar-sign shortcuts
   $sql = "show tables";
   $rst = mysql_query($sql, $db);
   while ($row = mysql_fetch_array($rst)) {
@@ -90,15 +94,14 @@ function sql_executioner()
         } else {
           $first = false;
         }
-        
-        print "<span onclick='submit_desc(this.innerHTML)' style='border-bottom: dotted 1px;' title='Click to describe table'>" . htmlentities($table) . "</span>";
+        print "<a href='#' onclick='submit_desc(this.innerHTML);return false;' title='Click to describe'>" . htmlentities($table) . "</a>";
       }
       ?>
       <br /><br />
       <strong>SQL</strong><br />
       <textarea id='sql' name='sql' rows="6" cols="60" style="width:100%"><?php print htmlentities($sql); ?></textarea><br />
       <p><strong>Use with extreme caution!</strong> The author of this plugin assumes no liability whatsoever for the potential destructive effects of its use.</p>
-      <input type="submit" name="function" value="Execute SQL" onclick='return check_sql();'/>
+      <input type="submit" class="button" name="function" value="Execute SQL" onclick='return check_sql();'/>
     </form>
   <?php
 
