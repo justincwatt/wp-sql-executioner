@@ -1,24 +1,14 @@
 <?php
 /*
 Plugin Name: SQL Executioner
-Version: 1.1
+Version: 1.2
 Plugin URI: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
-Description: Execute SQL commands on your WordPress database. Goto <a href="tools.php?page=sql-executioner.php">Tools &gt; SQL Executioner</a> to operate.
+Description: Execute SQL commands on your WordPress database. Goto <a href="tools.php?page=sql-executioner">Tools &gt; SQL Executioner</a> to operate.
 Author: Justin Watt
 Author URI: http://justinsomnia.org/
 
-1.1
-Add wp_nonce_field check, minor code cleanup
-
-1.0
-initial version
-
 LICENSE
-
-wp-sql-executioner.php
-Copyright (C) 2012 Justin Watt
-justincwatt@gmail.com
-http://justinsomnia.org/
+Copyright 2012 Justin Watt justincwatt@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,12 +23,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
 */
 
 function add_sql_executioner() {
-	// Add a new menu under Manage:
-	add_management_page( 'SQL Executioner', 'SQL Executioner', 'manage_options', __FILE__, 'sql_executioner' );
+	add_management_page( 'SQL Executioner', 'SQL Executioner', 'manage_options', 'sql-executioner', 'sql_executioner' );
 }
 add_action( 'admin_menu', 'add_sql_executioner' );
 
