@@ -50,6 +50,7 @@ is no GUI (graphical user interface).
 == Changelog ==
 = 1.2 =
 * Cleaned code up to submit to WP Plugin Repo
+* Wrapped functions in class
 
 = 1.1 =
 * Add wp_nonce_field check, minor code cleanup
