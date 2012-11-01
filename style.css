@@ -1,0 +1,13 @@
+table#sql-executioner-results {
+	border-collapse:collapse;
+}
+
+table#sql-executioner-results thead {
+	background:#ccc;
+}
+
+table#sql-executioner-results th,
+table#sql-executioner-results td {
+	border: 1px solid black;
+	padding: 2px 4px;
+}

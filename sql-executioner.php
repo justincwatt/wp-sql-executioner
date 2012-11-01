@@ -27,13 +27,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 new SQL_Executioner_Plugin();
 class SQL_Executioner_Plugin {
-
+	const version = 1.2;
 	private $db;
 	private $tables;
 
 	public function __construct() {
 		global $wpdb;
 
+		add_action( 'admin_init', array( $this, 'register_scripts') );
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 
 		// set up our own db connection so as to not interfer with WordPress
@@ -48,7 +49,8 @@ class SQL_Executioner_Plugin {
 	}
 
 	public function add_admin_menu() {
-		add_management_page( 'SQL Executioner', 'SQL Executioner', 'manage_options', 'sql-executioner', array( $this, 'admin_page' ) );
+		$page = add_management_page( 'SQL Executioner', 'SQL Executioner', 'manage_options', 'sql-executioner', array( $this, 'admin_page' ) );
+		add_action( 'admin_print_styles-' . $page, array( $this, 'enqueue_scripts' ) );
 	}
 
 	public function admin_page() {
@@ -65,14 +67,23 @@ class SQL_Executioner_Plugin {
 		require_once( 'form.php' );
 	}
 
+	public function register_scripts() {
+		wp_register_style( 'sql-executioner', plugins_url( 'style.css', __FILE__ ), array(), self::version );
+		wp_register_script( 'sql-executioner', plugins_url( 'script.js', __FILE__ ), array(), self::version );
+	}
+
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'sql-executioner' );
+		wp_enqueue_script( 'sql-executioner' );
+	}	
+
 	public function execute_sql($sql) {
 		if ( !check_admin_referer( 'sql-executioner-submit' ) ) 
 			return false;
 
 		$results = array();
-		$results['rows'] = array();
 
-		// interpolate real table names
+		// interpolate real table names for dollar-sign abbreviated "stubs"
 		foreach ( $this->tables as $table_name => $table_stub ) {
 			$sql = str_replace( $table_stub, $table_name, $sql );
 		}
