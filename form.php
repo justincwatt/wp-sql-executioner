@@ -26,10 +26,10 @@
 	<?php elseif ( isset( $results['rows'] ) || isset( $results['affected_rows'] ) ): ?>
 		
 		<h3>Results</h3>
-		<strong>Raw query:</strong> <?php print esc_html( $results['sql'] ); ?><br />
+		<strong>Raw query:</strong> <em><?php print esc_html( $results['sql'] ); ?></em><br />
 		
 		<?php if ( isset( $results['affected_rows'] ) ): ?>
-			<?php print $results['affected_rows'] . ' row' . ($results['affected_rows'] != 1 ? 's': '') . ' affected'; ?>
+			<?php print $results['affected_rows'] . ' row' . ( $results['affected_rows'] != 1 ? 's' : '' ) . ' affected'; ?>
 
 		<?php elseif ( count( $results['rows'] ) > 0 ): ?>
 			<div style='width:100%;overflow:auto;padding:2px;'>
@@ -39,7 +39,7 @@
 						$row = array_shift( $results['rows'] );
 						print "<tr>";
 						foreach ( $row as $value ) 
-							print "<th>" .  esc_html($value) . "</th>";
+							print "<th>" .  esc_html( $value ) . "</th>";
 						print "</tr>";					
 						?>
 					</thead>
@@ -48,7 +48,7 @@
 						foreach ( $results['rows'] as $row ) {
 							print "<tr>";
 							foreach ( $row as $value ) 
-								print "<td>" .  esc_html($value) . "</td>";
+								print "<td>" .  esc_html( $value ) . "</td>";
 							print "</tr>";
 						}
 						?>

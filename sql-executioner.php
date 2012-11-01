@@ -37,11 +37,11 @@ class SQL_Executioner_Plugin {
 		add_action( 'admin_init', array( $this, 'register_scripts') );
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 
-		// set up our own db connection so as to not interfer with WordPress
+		// set up our own db connection so as to not interfer with WordPress'
 		$this->db = mysql_connect( DB_HOST, DB_USER, DB_PASSWORD, true );
 		mysql_select_db( DB_NAME, $this->db );
 
-		// get list of tables and dollar-sign shortcuts
+		// get list of tables and create dollar-sign shortcuts
 		$rst = mysql_query( "show tables", $this->db );
 		while ( $row = mysql_fetch_array( $rst ) ) {
 			$this->tables[$row[0]] = '$' . preg_replace( "/^$wpdb->prefix/", '', $row[0] );
