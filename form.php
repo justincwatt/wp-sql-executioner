@@ -18,7 +18,12 @@
 		<input type="submit" class="button" value="Execute SQL" onclick='return sql_executioner_check_sql();' />
 	</form>
 
-	<?php if ( isset( $results['rows'] ) || isset( $results['affected_rows'] ) ): ?>
+
+	<?php if ( isset( $results['error'] ) ): ?>
+		<h3>Error</h3>
+		<?php print esc_html( $results['error'] ); ?>
+
+	<?php elseif ( isset( $results['rows'] ) || isset( $results['affected_rows'] ) ): ?>
 		
 		<h3>Results</h3>
 		<strong>Raw query:</strong> <?php print esc_html( $results['sql'] ); ?><br />
@@ -53,11 +58,6 @@
 		<?php else: ?>
 			<p>0 rows returned.</p>
 		<?php endif; ?>
-	<?php endif; ?>
-
-	<?php if ( isset( $results['error'] ) ): ?>
-		<h3>Error</h3>
-		<?php print esc_html( $results['error'] ); ?>
 	<?php endif; ?>
 	
 </div>

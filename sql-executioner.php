@@ -82,6 +82,7 @@ class SQL_Executioner_Plugin {
 			return false;
 
 		$results = array();
+		$results['rows'] = array();
 
 		// interpolate real table names for dollar-sign abbreviated "stubs"
 		foreach ( $this->tables as $table_name => $table_stub ) {
