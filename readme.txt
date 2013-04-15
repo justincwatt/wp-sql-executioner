@@ -21,6 +21,9 @@ power of SQL to analyze and update your blog's database.
 
 To use simply install and visit the Tools > SQL Executioner page.
 
+If you're interested in contributing to the code behind this plugin, it's also hosted on GitHub:
+https://github.com/justincwatt/wp-sql-executioner
+
 == Installation ==
 
 Extract the zip file, drop the sql-executioner folder in your wp-content/plugins/ 
