@@ -1,9 +1,11 @@
 <div class='wrap'>
+	<?php screen_icon(); ?>
 	<h2>SQL Executioner</h2>
 
 	<form method="post" name="sql_executioner">
 		<?php wp_nonce_field( 'sql-executioner-submit' ); ?>
-		<strong>Tables: </strong>
+		<p>
+		<label>Tables: </label>
 		<?php 
 		$links = array();
 		$link_template ="<a href='#' onclick='sql_executioner_submit_desc( this.innerHTML );return false;' title='Click to describe %s'>%s</a>";
@@ -11,11 +13,14 @@
 			$links[] = sprintf($link_template, esc_attr( $table_name ), esc_html( $table_stub ) );
 		print implode(', ', $links);
 		?>
-		
-		<h3>SQL</h3>
-		<textarea id='sql' name='sql' rows="3" cols="60" style="width:100%"><?php print esc_html( $sql ); ?></textarea><br />
+		</p>
+
+		<div class="form-field">
+			<label>SQL</label>
+			<textarea id='sql' name='sql' rows="3" cols="60" style="width:100%;font-family:Consolas,Monaco,monospace;"><?php print esc_html( $sql ); ?></textarea>
+		</div>
 		<p><strong>Use with extreme caution!</strong> The author of this plugin assumes no liability whatsoever for the potential destructive effects of its use.</p>
-		<input type="submit" class="button" value="Execute SQL" onclick='return sql_executioner_check_sql();' />
+		<input type="submit" class="button button-primary" value="Execute SQL" onclick='return sql_executioner_check_sql();' />
 	</form>
 
 

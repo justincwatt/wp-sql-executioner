@@ -3,7 +3,7 @@ Contributors: justincwatt
 Donate link: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
 Tags: phpMyAdmin, MySQL, query, SQL, DBA, database, database administration, admin
 Requires at least: 3.0
-Tested up to: 3.4.2
+Tested up to: 3.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
