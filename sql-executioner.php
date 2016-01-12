@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 new SQL_Executioner_Plugin();
 class SQL_Executioner_Plugin {
-	const version = 1.2;
+	const version = 1.3;
 	private $db;
 	private $tables;
 
