@@ -58,8 +58,8 @@ class SQL_Executioner_Plugin {
 		$results = array();
 
 		if ( isset( $_POST['sql'] ) ) {
-			// We stripslashes here because WordPress forcefully adds 
-			// magic quotes in wp-settings.php, regardless of get_magic_quotes_gpc(), 
+			// We stripslashes here because WordPress forcefully adds
+			// magic quotes in wp-settings.php, regardless of get_magic_quotes_gpc(),
 			$sql = trim( stripslashes( $_POST['sql'] ) );
 			$results = $this->execute_sql( $sql );
 		}
@@ -79,7 +79,7 @@ class SQL_Executioner_Plugin {
 	}	
 
 	public function execute_sql($sql) {
-		if ( !check_admin_referer( 'sql-executioner-submit' ) ) 
+		if ( !check_admin_referer( 'sql-executioner-submit' ) )
 			return false;
 
 		$results = array();
