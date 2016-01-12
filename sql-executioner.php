@@ -65,6 +65,7 @@ class SQL_Executioner_Plugin {
 		}
 
 		require_once( 'form.php' );
+		require_once( 'csv.php' );
 	}
 
 	public function register_scripts() {
