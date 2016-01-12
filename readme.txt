@@ -1,7 +1,7 @@
 === SQL Executioner ===
 Contributors: justincwatt
 Donate link: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
-Tags: phpMyAdmin, MySQL, query, SQL, DBA, database, database administration, admin
+Tags: phpMyAdmin, MySQL, query, SQL, DBA, database, database administration, admin, CSV
 Requires at least: 3.0
 Tested up to: 4.2.2
 Stable tag: trunk
