@@ -51,6 +51,9 @@ is no GUI (graphical user interface).
 1. This is what you get after describing the posts table.
 
 == Changelog ==
+= 1.3 =
+* Add CSV export format
+
 = 1.2 =
 * Cleaned code up to submit to WP Plugin Repo
 * Wrapped functions in class
