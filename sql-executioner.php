@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: SQL Executioner
-Version: 1.2
+Version: 1.3
 Plugin URI: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
 Description: Execute SQL commands on your WordPress database. Goto <a href="tools.php?page=sql-executioner">Tools &gt; SQL Executioner</a> to operate.
 Author: Justin Watt
@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 new SQL_Executioner_Plugin();
 class SQL_Executioner_Plugin {
-	const version = 1.2;
+	const version = 1.3;
 	private $db;
 	private $tables;
 
