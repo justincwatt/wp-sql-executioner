@@ -1,7 +1,7 @@
 === SQL Executioner ===
-Contributors: justincwatt
+Contributors: justincwatt, olarmarius
 Donate link: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
-Tags: phpMyAdmin, MySQL, query, SQL, DBA, database, database administration, admin
+Tags: phpMyAdmin, MySQL, query, SQL, DBA, database, database administration, admin, CSV
 Requires at least: 3.0
 Tested up to: 4.6.1
 Stable tag: trunk
@@ -51,6 +51,9 @@ is no GUI (graphical user interface).
 1. This is what you get after describing the posts table.
 
 == Changelog ==
+= 1.4 =
+* Added CSV export format (hat tip: olarmarius)
+
 = 1.3 =
 * Updated to work with PHP 7
 
