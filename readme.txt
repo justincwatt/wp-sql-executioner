@@ -65,6 +65,9 @@ is no GUI (graphical user interface).
 * Initial version
 
 == Upgrade Notice ==
+= 1.3 =
+Compatibility Update: supports PHP 7
+
 = 1.1 =
 Security Update: added wp_nonce_field check
 
