@@ -6,7 +6,7 @@
 		<?php wp_nonce_field( 'sql-executioner-submit' ); ?>
 		<p>
 		<label>Tables: </label>
-		<?php 
+		<?php
 		$links = array();
 		$link_template ="<a href='#' onclick='sql_executioner_submit_desc( this.innerHTML );return false;' title='Click to describe %s'>%s</a>";
 		foreach ( $this->tables as $table_name => $table_stub )
@@ -43,7 +43,7 @@
 						<?php						
 						$row = array_shift( $results['rows'] );
 						print "<tr>";
-						foreach ( $row as $value ) 
+						foreach ( $row as $value )
 							print "<th>" .  esc_html( $value ) . "</th>";
 						print "</tr>";					
 						?>
@@ -52,7 +52,7 @@
 						<?php
 						foreach ( $results['rows'] as $row ) {
 							print "<tr>";
-							foreach ( $row as $value ) 
+							foreach ( $row as $value )
 								print "<td>" .  esc_html( $value ) . "</td>";
 							print "</tr>";
 						}

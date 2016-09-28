@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: SQL Executioner
-Version: 1.3
+Version: 1.4
 Plugin URI: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
 Description: Execute SQL commands on your WordPress database. Goto <a href="tools.php?page=sql-executioner">Tools &gt; SQL Executioner</a> to operate.
 Author: Justin Watt
 Author URI: http://justinsomnia.org/
 
 LICENSE
-Copyright 2012 Justin Watt justincwatt@gmail.com
+Copyright 2012-2016 Justin Watt justincwatt@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -57,13 +57,14 @@ class SQL_Executioner_Plugin {
 		$results = array();
 
 		if ( isset( $_POST['sql'] ) ) {
-			// We stripslashes here because WordPress forcefully adds 
-			// magic quotes in wp-settings.php, regardless of get_magic_quotes_gpc(), 
+			// We stripslashes here because WordPress forcefully adds
+			// magic quotes in wp-settings.php, regardless of get_magic_quotes_gpc(),
 			$sql = trim( stripslashes( $_POST['sql'] ) );
 			$results = $this->execute_sql( $sql );
 		}
 
 		require_once( 'form.php' );
+		require_once( 'csv.php' );
 	}
 
 	public function register_scripts() {
@@ -77,7 +78,7 @@ class SQL_Executioner_Plugin {
 	}	
 
 	public function execute_sql($sql) {
-		if ( !check_admin_referer( 'sql-executioner-submit' ) ) 
+		if ( !check_admin_referer( 'sql-executioner-submit' ) )
 			return false;
 
 		$results = array();
