@@ -111,4 +111,14 @@ class SQL_Executioner_Plugin {
 
 		return $results;
 	}
+
+	// From: https://gist.github.com/johanmeiring/2894568
+	public static function str_putcsv($input, $delimiter = ',', $enclosure = '"') {
+		$fp = fopen( 'php://temp', 'r+b' );
+		fputcsv( $fp, $input, $delimiter, $enclosure );
+		rewind( $fp );
+		$data = rtrim(stream_get_contents( $fp ), "\n" );
+		fclose( $fp );
+		return $data;
+	}
 }
