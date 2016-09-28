@@ -38,12 +38,11 @@ class SQL_Executioner_Plugin {
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 
 		// set up our own db connection so as to not interfer with WordPress'
-		$this->db = mysql_connect( DB_HOST, DB_USER, DB_PASSWORD, true );
-		mysql_select_db( DB_NAME, $this->db );
+		$this->db = mysqli_connect( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
 
 		// get list of tables and create dollar-sign shortcuts
-		$rst = mysql_query( "show tables", $this->db );
-		while ( $row = mysql_fetch_array( $rst ) ) {
+		$rst = mysqli_query( $this->db, "show tables" );
+		while ( $row = mysqli_fetch_array( $rst ) ) {
 			$this->tables[$row[0]] = '$' . preg_replace( "/^$wpdb->prefix/", '', $row[0] );
 		}		
 	}
@@ -90,13 +89,13 @@ class SQL_Executioner_Plugin {
 		}
 		$results['sql'] = $sql;
 
-		if ( $rst = mysql_query( $sql, $this->db ) ) {
+		if ( $rst = mysqli_query( $this->db, $sql ) ) {
 
 			if ( preg_match( "/^\s*(alter|create|drop|rename|insert|delete|update|replace|truncate) /i", $sql ) ) {
-				$results['affected_rows'] = mysql_affected_rows( $this->db );
+				$results['affected_rows'] = mysqli_affected_rows( $this->db );
 			} else {
 				$first = true;
-				while ( $row = mysql_fetch_assoc( $rst ) ) {
+				while ( $row = mysqli_fetch_assoc( $rst ) ) {
 					if ( $first ) {
 						$results['rows'][] = array_keys( $row );
 						$first = false;
@@ -106,7 +105,7 @@ class SQL_Executioner_Plugin {
 			}
 			
 		} else {
-			$results['error'] = mysql_error( $this->db );
+			$results['error'] = mysqli_error( $this->db );
 		}
 
 		return $results;

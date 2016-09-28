@@ -3,7 +3,7 @@ Contributors: justincwatt
 Donate link: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
 Tags: phpMyAdmin, MySQL, query, SQL, DBA, database, database administration, admin
 Requires at least: 3.0
-Tested up to: 4.2.2
+Tested up to: 4.6.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -51,6 +51,9 @@ is no GUI (graphical user interface).
 1. This is what you get after describing the posts table.
 
 == Changelog ==
+= 1.3 =
+* Updated to work with PHP 7
+
 = 1.2 =
 * Cleaned code up to submit to WP Plugin Repo
 * Wrapped functions in class
