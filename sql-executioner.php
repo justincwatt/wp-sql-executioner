@@ -38,7 +38,13 @@ class SQL_Executioner_Plugin {
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 
 		// set up our own db connection so as to not interfer with WordPress'
-		$this->db = mysqli_connect( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
+		$parts = explode(':', DB_HOST);
+		$host = $parts[0];
+		$port = ini_get("mysqli.default_port");
+		if ( count($parts) > 1 ) {
+			$port = $parts[1];
+		}
+		$this->db = mysqli_connect( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
 
 		// get list of tables and create dollar-sign shortcuts
 		$rst = mysqli_query( $this->db, "show tables" );
