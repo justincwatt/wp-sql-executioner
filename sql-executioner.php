@@ -170,6 +170,7 @@ class SQL_Executioner_Plugin {
 				}
 			}
 
+                        $results['columns'] = mysqli_fetch_fields( $rst );
                         $results['insert_id'] = mysqli_insert_id( $this->db );
 		} else {
 			$results['error'] = mysqli_error( $this->db );
