@@ -36,6 +36,7 @@ class SQL_Executioner_Plugin {
 
 		add_action( 'admin_init', array( $this, 'register_scripts') );
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
+		add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
 
 		// set up our own db connection so as to not interfer with WordPress'
 		$this->db = mysqli_connect( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
@@ -120,5 +121,58 @@ class SQL_Executioner_Plugin {
 		$data = rtrim(stream_get_contents( $fp ), "\n" );
 		fclose( $fp );
 		return $data;
+	}
+
+	public static function rest_api_init() {
+		$namespace = 'sql-executioner/v1';
+
+		register_rest_route($namespace,
+			'/result',
+			array(
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'rest_api_execute' ),
+				),
+			)
+		);
+	}
+
+	public static function rest_api_execute( WP_REST_Request $request ) {
+		$json = $request->get_json_params();
+		$sql = $json['sql'];
+		$hmac = $json['hmac'];
+
+		if ( !defined('SQLEXECUTIONER_KEY') ) {
+			return new WP_Error( 'rest_disabled', __( 'No access key is defined' ), array( 'status' => 403 ) );
+		}
+
+		$expected_hmac = hash_hmac('sha256', $sql, SQLEXECUTIONER_KEY);
+		if ( $expected_hmac !== $hmac ) {
+			return new WP_Error( 'rest_invalid_hmac', __( 'Specified HMAC did not match' ), array( 'status' => 403 ) );
+		}
+
+		$results = array();
+		$results['rows'] = array();
+		$results['sql'] = $sql;
+
+		if ( $rst = mysqli_query( $this->db, $sql ) ) {
+
+			if ( preg_match( "/^\s*(alter|create|drop|rename|insert|delete|update|replace|truncate) /i", $sql ) ) {
+				$results['affected_rows'] = mysqli_affected_rows( $this->db );
+			} else {
+				$first = true;
+				while ( $row = mysqli_fetch_assoc( $rst ) ) {
+					if ( $first ) {
+						$results['rows'][] = array_keys( $row );
+						$first = false;
+					}
+					$results['rows'][] = array_values( $row );
+				}
+			}
+		} else {
+			$results['error'] = mysqli_error( $this->db );
+		}
+
+		return $results;
 	}
 }
