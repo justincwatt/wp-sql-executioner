@@ -40,6 +40,7 @@ class SQL_Executioner_Plugin {
 
 		// set up our own db connection so as to not interfer with WordPress'
 		$this->db = mysqli_connect( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
+                mysqli_set_charset ( $this->db , 'utf8' );
 
 		// get list of tables and create dollar-sign shortcuts
 		$rst = mysqli_query( $this->db, "show tables" );
