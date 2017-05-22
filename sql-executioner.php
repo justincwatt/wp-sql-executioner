@@ -169,6 +169,8 @@ class SQL_Executioner_Plugin {
 					$results['rows'][] = array_values( $row );
 				}
 			}
+
+                        $results['insert_id'] = mysqli_insert_id( $this->db );
 		} else {
 			$results['error'] = mysqli_error( $this->db );
 		}
