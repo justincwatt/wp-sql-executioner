@@ -142,12 +142,17 @@ class SQL_Executioner_Plugin {
 		$json = $request->get_json_params();
 		$sql = $json['sql'];
 		$hmac = $json['hmac'];
+		$timestamp = $json['time'];
 
 		if ( !defined('SQLEXECUTIONER_KEY') ) {
 			return new WP_Error( 'rest_disabled', __( 'No access key is defined' ), array( 'status' => 403 ) );
 		}
 
-		$expected_hmac = hash_hmac('sha256', $sql, SQLEXECUTIONER_KEY);
+		if ( $timestamp < time() - 30 ) {
+			return new WP_Error( 'rest_invalid_hmac', __( 'Timestamp for HMAC too old' ), array( 'status' => 403 ) );
+		}
+
+		$expected_hmac = hash_hmac('sha256', $timestamp . ":" . $sql, SQLEXECUTIONER_KEY);
 		if ( $expected_hmac !== $hmac ) {
 			return new WP_Error( 'rest_invalid_hmac', __( 'Specified HMAC did not match' ), array( 'status' => 403 ) );
 		}

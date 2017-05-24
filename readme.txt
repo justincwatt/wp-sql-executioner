@@ -32,22 +32,20 @@ directory, and then activate from the Plugins page.
 == REST API ==
 
 To enable API access to your SQL database, add a line to `wp-config.php`:
-```
-define('SQLEXECUTIONER_KEY', '<your secret key goes here>');
-```
+
+  define('SQLEXECUTIONER_KEY', '<your secret key goes here>');
 
 This will activate an API endpoint at
-```
-/wp-json/sql-executioner/v1/result
-```
+
+  /wp-json/sql-executioner/v1/result
+
 which accepts JSON-formatted SQL queries like this:
-```sh
-wget -O - --header='Content-Type: application/json' --post-data='{"sql": "SELECT 1;", "hmac": "<HMAC goes here>"}' 'http://your-domain.com/wp-json/sql-executioner/v1/result'
-```
+
+  wget -O - --header='Content-Type: application/json' --post-data='{"sql": "SELECT 1;", "time": <seconds since 1970 go here>, "hmac": "<HMAC goes here>"}' 'http://your-domain.com/wp-json/sql-executioner/v1/result'
+
 and the HMAC is computed as
-```php
-$hmac = hash_hmac('sha256', $sql, SQLEXECUTIONER_KEY);
-```
+
+  $hmac = hash_hmac('sha256', time() . ":" . $sql, SQLEXECUTIONER_KEY);
 
 == Frequently Asked Questions ==
 
