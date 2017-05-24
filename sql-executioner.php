@@ -124,7 +124,7 @@ class SQL_Executioner_Plugin {
 		return $data;
 	}
 
-	public static function rest_api_init() {
+	public function rest_api_init() {
 		$namespace = 'sql-executioner/v1';
 
 		register_rest_route($namespace,
@@ -138,7 +138,7 @@ class SQL_Executioner_Plugin {
 		);
 	}
 
-	public static function rest_api_execute( WP_REST_Request $request ) {
+	public function rest_api_execute( WP_REST_Request $request ) {
 		$json = $request->get_json_params();
 		$sql = $json['sql'];
 		$hmac = $json['hmac'];
