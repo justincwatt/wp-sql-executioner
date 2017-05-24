@@ -1,5 +1,5 @@
 === SQL Executioner ===
-Contributors: justincwatt, olarmarius
+Contributors: justincwatt, olarmarius, drahflow
 Donate link: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
 Tags: phpMyAdmin, MySQL, query, SQL, DBA, database, database administration, admin, CSV
 Requires at least: 3.0
