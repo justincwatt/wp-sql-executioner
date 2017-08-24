@@ -1,5 +1,5 @@
 === SQL Executioner ===
-Contributors: justincwatt, olarmarius
+Contributors: justincwatt, olarmarius, drahflow
 Donate link: http://justinsomnia.org/2008/02/the-wordpress-sql-executioner/
 Tags: phpMyAdmin, MySQL, query, SQL, DBA, database, database administration, admin, CSV
 Requires at least: 3.0
@@ -28,6 +28,24 @@ https://github.com/justincwatt/wp-sql-executioner
 
 Extract the zip file, drop the sql-executioner folder in your wp-content/plugins/ 
 directory, and then activate from the Plugins page.
+
+== REST API ==
+
+To enable API access to your SQL database, add a line to `wp-config.php`:
+
+  define('SQLEXECUTIONER_KEY', '<your secret key goes here>');
+
+This will activate an API endpoint at
+
+  /wp-json/sql-executioner/v1/result
+
+which accepts JSON-formatted SQL queries like this:
+
+  wget -O - --header='Content-Type: application/json' --post-data='{"sql": "SELECT 1;", "time": <seconds since 1970 go here>, "hmac": "<HMAC goes here>"}' 'http://your-domain.com/wp-json/sql-executioner/v1/result'
+
+and the HMAC is computed as
+
+  $hmac = hash_hmac('sha256', time() . ":" . $sql, SQLEXECUTIONER_KEY);
 
 == Frequently Asked Questions ==
 
